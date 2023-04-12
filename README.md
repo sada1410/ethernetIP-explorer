@@ -15,9 +15,7 @@
 
 ## Releases & Downloads
 
-*  [EthernetIP-Explorer 1.2.1](https://github.com/tswaehn/ethernetIP-explorer/releases/download/1.2.1/SetupEnIPExplorer_1.2.1.exe) (win)
-
-*  [EthernetIP-Explorer 1.2.2](https://github.com/tswaehn/ethernetIP-explorer/releases/download/1.2.2/SetupEnIPExplorer_1.2.2.exe) (win)
+* TBD
 
 
 
