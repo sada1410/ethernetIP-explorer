@@ -56,6 +56,9 @@
             this.buttonFw = new System.Windows.Forms.Button();
             this.tmrO2T = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -93,6 +96,7 @@
             this.splitContainer8.Panel2.SuspendLayout();
             this.splitContainer8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CycleTime)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -182,7 +186,7 @@
             this.pictureBox3.Location = new System.Drawing.Point(0, 0);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(16, 50);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
             // 
@@ -259,7 +263,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(16, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
@@ -319,8 +323,8 @@
             this.ImgInputActivity.Image = global::EnIPExplorer.Properties.Resources.bullet_red;
             this.ImgInputActivity.Location = new System.Drawing.Point(16, 0);
             this.ImgInputActivity.Name = "ImgInputActivity";
-            this.ImgInputActivity.Size = new System.Drawing.Size(16, 50);
-            this.ImgInputActivity.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.ImgInputActivity.Size = new System.Drawing.Size(30, 50);
+            this.ImgInputActivity.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ImgInputActivity.TabIndex = 3;
             this.ImgInputActivity.TabStop = false;
             this.ImgInputActivity.Visible = false;
@@ -332,7 +336,7 @@
             this.pictureBox2.Location = new System.Drawing.Point(0, 0);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(16, 50);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
             // 
@@ -361,6 +365,7 @@
             this.propertyGridInput.Size = new System.Drawing.Size(215, 312);
             this.propertyGridInput.TabIndex = 0;
             this.propertyGridInput.ToolbarVisible = false;
+            this.propertyGridInput.Click += new System.EventHandler(this.propertyGridInput_Click);
             this.propertyGridInput.DragDrop += new System.Windows.Forms.DragEventHandler(this.Input_DragDrop);
             this.propertyGridInput.DragEnter += new System.Windows.Forms.DragEventHandler(this._DragEnter);
             // 
@@ -372,10 +377,14 @@
             // 
             // splitContainer8.Panel1
             // 
+            this.splitContainer8.Panel1.Controls.Add(this.checkBox1);
+            this.splitContainer8.Panel1.Controls.Add(this.label2);
+            this.splitContainer8.Panel1.Controls.Add(this.numericUpDown1);
             this.splitContainer8.Panel1.Controls.Add(this.CycleTime);
             this.splitContainer8.Panel1.Controls.Add(this.label1);
             this.splitContainer8.Panel1.Controls.Add(this.checkP2P);
             this.splitContainer8.Panel1.Controls.Add(this.checkWriteConfig);
+            this.splitContainer8.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer8_Panel1_Paint);
             // 
             // splitContainer8.Panel2
             // 
@@ -386,14 +395,14 @@
             // 
             // CycleTime
             // 
-            this.CycleTime.Location = new System.Drawing.Point(436, 17);
+            this.CycleTime.Location = new System.Drawing.Point(511, 16);
             this.CycleTime.Maximum = new decimal(new int[] {
-            1000,
+            5000,
             0,
             0,
             0});
             this.CycleTime.Minimum = new decimal(new int[] {
-            100,
+            10,
             0,
             0,
             0});
@@ -409,7 +418,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(499, 20);
+            this.label1.Location = new System.Drawing.Point(574, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(78, 13);
             this.label1.TabIndex = 2;
@@ -420,7 +429,7 @@
             this.checkP2P.AutoSize = true;
             this.checkP2P.Checked = true;
             this.checkP2P.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkP2P.Location = new System.Drawing.Point(208, 18);
+            this.checkP2P.Location = new System.Drawing.Point(102, 19);
             this.checkP2P.Name = "checkP2P";
             this.checkP2P.Size = new System.Drawing.Size(89, 17);
             this.checkP2P.TabIndex = 1;
@@ -458,6 +467,41 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Enabled = false;
+            this.numericUpDown1.Location = new System.Drawing.Point(303, 17);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(57, 20);
+            this.numericUpDown1.TabIndex = 4;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(366, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(87, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "O->T data length";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(197, 19);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(100, 17);
+            this.checkBox1.TabIndex = 6;
+            this.checkBox1.Text = "Variable Length";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // ImplicitMessaging
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -482,7 +526,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             this.splitContainer5.Panel1.ResumeLayout(false);
-            this.splitContainer5.Panel1.PerformLayout();
             this.splitContainer5.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
@@ -492,13 +535,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
             this.splitContainer6.Panel1.ResumeLayout(false);
-            this.splitContainer6.Panel1.PerformLayout();
             this.splitContainer6.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).EndInit();
             this.splitContainer6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.splitContainer7.Panel1.ResumeLayout(false);
-            this.splitContainer7.Panel1.PerformLayout();
             this.splitContainer7.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).EndInit();
             this.splitContainer7.ResumeLayout(false);
@@ -510,6 +551,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).EndInit();
             this.splitContainer8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.CycleTime)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -542,5 +584,8 @@
         private System.Windows.Forms.PictureBox ImgInputActivity;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }

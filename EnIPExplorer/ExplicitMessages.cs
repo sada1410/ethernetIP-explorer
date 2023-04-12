@@ -164,7 +164,7 @@ namespace EnIPExplorer
         private void refreshSendWindow()
         {
             List<byte> lb = new List<byte>();
-            lb.Add(getServiceId());
+            // lb.Add(getServiceId());
             List<byte> path = GetPath(getClasseId(), getInstanceId(), getAttributeId());
             lb.Add(((byte)(path.Count/2))); // size in words not bytes
             lb.AddRange(path);
@@ -176,12 +176,14 @@ namespace EnIPExplorer
         {
             refreshSendWindow();
 
+            tb_received.Text = "";
+
             List<byte> lb = new List<byte>();
-            lb.Add(getServiceId());
+            // lb.Add(getServiceId());
             List<byte> path = GetPath(getClasseId(), getInstanceId(), getAttributeId());
-            lb.Add(((byte)(path.Count / 2))); // size in words not bytes
+            // lb.Add(((byte)(path.Count / 2))); // size in words not bytes
             lb.AddRange(path);
-            lb.AddRange(getExtraData());
+            //lb.AddRange(getExtraData());
 
 
             int Lenght = 0;
@@ -193,8 +195,11 @@ namespace EnIPExplorer
 
             getDevice().SendUCMM_RR_Packet(msg, ((CIPServiceCodes)getServiceId()), data, ref Offset, ref Lenght, out pack);
 
-            if(Lenght > 40) // 40 is normally the offset from Encapsulation Header to CipHeader ... iterate over the items in the enip message instaed would be an option and maybe something like "getUnconnectedDataItem"
-                tb_received.Text = ByteArrayToString(SubArray(pack, 40, Lenght- 40));
+            if (Lenght > 44)
+                tb_received.Text = ByteArrayToString(SubArray(pack, 44, Lenght - 44));
+
+            // if (Lenght > 40) // 40 is normally the offset from Encapsulation Header to CipHeader ... iterate over the items in the enip message instaed would be an option and maybe something like "getUnconnectedDataItem"
+                // tb_received.Text = ByteArrayToString(SubArray(pack, 40, Lenght- 40));
 
 
             //  EnIPRemoteDevice remotedevice = new EnIPRemoteDevice(new System.Net.IPEndPoint(IPAddress.Parse(Strs[0]), 0xAF12), Properties.Settings.Default.TCP_LAN_Timeout);
@@ -426,7 +431,7 @@ namespace EnIPExplorer
             if (tb_attribute.Text.Equals(""))
                 return null; // dont use attributeID
             UInt16 attributeId;
-            if(!(UInt16.TryParse(cb_class.Text, out attributeId)))
+            if(!(UInt16.TryParse(tb_attribute.Text, out attributeId)))
             {
                 tb_attribute.Text = "";
                 return null;

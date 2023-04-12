@@ -13,12 +13,13 @@ using System.Reflection;
 
 namespace EnIPExplorer
 {
-    public partial class ImplicitMessaging : Form
+    public partial class  ImplicitMessaging : Form
     {
         EnIPAttribut Config, Input, Output;
         EnIPRemoteDevice device;
         ForwardClose_Packet FwclosePacket = null;
         String MCastAddress=null;
+        bool isOTVariable = false;
 
         public ImplicitMessaging(TreeView devicetreeView)
         {
@@ -118,6 +119,11 @@ namespace EnIPExplorer
 
             if (FwclosePacket == null)
             {
+                if ( isOTVariable )
+                {
+                    Output.RawData = new byte[(int)numericUpDown1.Value];
+                }
+
                 // CycleTime in microseconds
                 EnIPNetworkStatus result = device.ForwardOpen(Config, Output, Input, out FwclosePacket, (uint)(CycleTime.Value * 1000), checkP2P.Checked, checkWriteConfig.Checked);
 
@@ -183,6 +189,32 @@ namespace EnIPExplorer
                 Output.EncodeFromDecodedMembers();
                 propertyGridOutput.Refresh();
             }
+        }
+
+        private void propertyGridInput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void splitContainer8_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            isOTVariable = checkBox1.Checked;
+            numericUpDown1.Enabled = isOTVariable;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void propertyGridConfig_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
