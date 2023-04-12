@@ -223,7 +223,8 @@ namespace System.Net.EnIPStack
             if (IsConnected()) return true;
             try
             {
-                Tcpclient = new TcpClient();
+                IPEndPoint LocalEp = new IPEndPoint(IPAddress.Parse(EnIPExplorer.Properties.Settings.Default.DefaultIPInterface), 0x8AE);
+                Tcpclient = new TcpClient(LocalEp);
                 Tcpclient.ReceiveTimeout = this.Timeout;
 
                 SocketAsyncEventArgs AsynchEvent = new SocketAsyncEventArgs();
