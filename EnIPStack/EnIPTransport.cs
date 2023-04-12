@@ -223,7 +223,7 @@ namespace System.Net.EnIPStack
             if (IsConnected()) return true;
             try
             {
-                IPEndPoint LocalEp = new IPEndPoint(IPAddress.Parse(EnIPExplorer.Properties.Settings.Default.DefaultIPInterface), 0x8AE);
+                IPEndPoint LocalEp = new IPEndPoint(IPAddress.Parse(EnIPExplorer.Properties.Settings.Default.DefaultIPInterface), 0);
                 Tcpclient = new TcpClient(LocalEp);
                 Tcpclient.ReceiveTimeout = this.Timeout;
 
