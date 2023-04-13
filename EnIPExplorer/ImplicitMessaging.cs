@@ -110,12 +110,14 @@ namespace EnIPExplorer
         private void buttonFw_Click(object sender, EventArgs e)
         {
             if (!checkP2P.Checked) // multicast mode, get first @ by device query
+            {
                 if (MCastAddress == null)
                 {
                     GetMultiCastAdress();
                     if (MCastAddress != null)
                         device.Class1AddMulticast(MCastAddress); // I will be possible to Join the 32 consecutives @ to be sure
                 }
+            }
 
             if (FwclosePacket == null)
             {
@@ -125,7 +127,7 @@ namespace EnIPExplorer
                 }
 
                 // CycleTime in microseconds
-                EnIPNetworkStatus result = device.ForwardOpen(Config, Output, Input, out FwclosePacket, (uint)(CycleTime.Value * 1000), checkP2P.Checked, checkWriteConfig.Checked);
+                EnIPNetworkStatus result = device.ForwardOpen(Config, Output, Input, out FwclosePacket, (uint)(CycleTime.Value * 1000), checkP2P.Checked, checkWriteConfig.Checked, checkBox2.Checked);
 
                 if (result == EnIPNetworkStatus.OnLine)
                 {
@@ -213,6 +215,21 @@ namespace EnIPExplorer
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkP2P_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelOutput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
 
         }

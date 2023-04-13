@@ -499,13 +499,13 @@ namespace System.Net.EnIPStack
             // return something like  0x20, 0x04, 0x24, 0x80, 0x2C, 0x66, 0x2C, 0x65
         }
 
-        public EnIPNetworkStatus ForwardOpen(EnIPAttribut Config, EnIPAttribut O2T, EnIPAttribut T2O, out ForwardClose_Packet ClosePacket, uint CycleTime, bool P2P = false, bool WriteConfig = false)
+        public EnIPNetworkStatus ForwardOpen(EnIPAttribut Config, EnIPAttribut O2T, EnIPAttribut T2O, out ForwardClose_Packet ClosePacket, uint CycleTime, bool P2P = false, bool WriteConfig = false, bool Heartbeat=false)
         {
             ForwardOpen_Config conf = new ForwardOpen_Config(O2T, T2O, P2P, CycleTime);
-            return ForwardOpen(Config, O2T, T2O, out ClosePacket, conf, WriteConfig);
+            return ForwardOpen(Config, O2T, T2O, out ClosePacket, conf, WriteConfig, Heartbeat);
         }
 
-        public EnIPNetworkStatus ForwardOpen(EnIPAttribut Config, EnIPAttribut O2T, EnIPAttribut T2O, out ForwardClose_Packet ClosePacket, ForwardOpen_Config conf, bool WriteConfig=false)
+        public EnIPNetworkStatus ForwardOpen(EnIPAttribut Config, EnIPAttribut O2T, EnIPAttribut T2O, out ForwardClose_Packet ClosePacket, ForwardOpen_Config conf, bool WriteConfig=false, bool Heartbeat=false)
         {
             ClosePacket = null;
 
@@ -542,7 +542,7 @@ namespace System.Net.EnIPStack
                 if (O2T != null)
                 {
                     O2T.O2T_ConnectionId = BitConverter.ToUInt32(packet, Offset); // badly made
-                    O2T.SequenceItem = new SequencedAddressItem(O2T.O2T_ConnectionId, 0, O2T.RawData); // ready to send
+                    O2T.SequenceItem = new SequencedAddressItem(O2T.O2T_ConnectionId, 0, O2T.RawData, Heartbeat); // ready to send
                 }
 
                 if (T2O != null)
@@ -841,6 +841,8 @@ namespace System.Net.EnIPStack
         ForwardClose_Packet closePkt;
         // sequence for O->T
         public SequencedAddressItem SequenceItem;
+
+        public bool heartBeatActivated;
 
         public event T2OEventHandler T2OEvent;
 

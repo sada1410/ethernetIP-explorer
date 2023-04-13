@@ -49,6 +49,9 @@
             this.labelInput = new System.Windows.Forms.Label();
             this.propertyGridInput = new System.Windows.Forms.PropertyGrid();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.CycleTime = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.checkP2P = new System.Windows.Forms.CheckBox();
@@ -56,9 +59,9 @@
             this.buttonFw = new System.Windows.Forms.Button();
             this.tmrO2T = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -95,8 +98,9 @@
             this.splitContainer8.Panel1.SuspendLayout();
             this.splitContainer8.Panel2.SuspendLayout();
             this.splitContainer8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CycleTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CycleTime)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -246,6 +250,7 @@
             // 
             // splitContainer6.Panel1
             // 
+            this.splitContainer6.Panel1.Controls.Add(this.checkBox2);
             this.splitContainer6.Panel1.Controls.Add(this.pictureBox1);
             this.splitContainer6.Panel1.Controls.Add(this.labelOutput);
             // 
@@ -273,10 +278,12 @@
             this.labelOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelOutput.Location = new System.Drawing.Point(0, 0);
             this.labelOutput.Name = "labelOutput";
+            this.labelOutput.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.labelOutput.Size = new System.Drawing.Size(222, 50);
             this.labelOutput.TabIndex = 1;
             this.labelOutput.Text = "Output (O->T)\r\nDrag Drop to set";
-            this.labelOutput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelOutput.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.labelOutput.Click += new System.EventHandler(this.labelOutput_Click);
             this.labelOutput.DragDrop += new System.Windows.Forms.DragEventHandler(this.Output_DragDrop);
             this.labelOutput.DragEnter += new System.Windows.Forms.DragEventHandler(this._DragEnter);
             // 
@@ -377,6 +384,8 @@
             // 
             // splitContainer8.Panel1
             // 
+            this.splitContainer8.Panel1.Controls.Add(this.label3);
+            this.splitContainer8.Panel1.Controls.Add(this.numericUpDown2);
             this.splitContainer8.Panel1.Controls.Add(this.checkBox1);
             this.splitContainer8.Panel1.Controls.Add(this.label2);
             this.splitContainer8.Panel1.Controls.Add(this.numericUpDown1);
@@ -393,9 +402,44 @@
             this.splitContainer8.SplitterDistance = 655;
             this.splitContainer8.TabIndex = 0;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(250, 18);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(100, 17);
+            this.checkBox1.TabIndex = 6;
+            this.checkBox1.Text = "Variable Length";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(358, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(87, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "O->T data length";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Enabled = false;
+            this.numericUpDown1.Location = new System.Drawing.Point(373, 23);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(57, 20);
+            this.numericUpDown1.TabIndex = 4;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
             // CycleTime
             // 
-            this.CycleTime.Location = new System.Drawing.Point(511, 16);
+            this.CycleTime.Location = new System.Drawing.Point(562, 23);
             this.CycleTime.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -418,7 +462,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(574, 20);
+            this.label1.Location = new System.Drawing.Point(552, 7);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(78, 13);
             this.label1.TabIndex = 2;
@@ -429,17 +473,18 @@
             this.checkP2P.AutoSize = true;
             this.checkP2P.Checked = true;
             this.checkP2P.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkP2P.Location = new System.Drawing.Point(102, 19);
+            this.checkP2P.Location = new System.Drawing.Point(138, 18);
             this.checkP2P.Name = "checkP2P";
             this.checkP2P.Size = new System.Drawing.Size(89, 17);
             this.checkP2P.TabIndex = 1;
             this.checkP2P.Text = "Point to Point";
             this.checkP2P.UseVisualStyleBackColor = true;
+            this.checkP2P.CheckedChanged += new System.EventHandler(this.checkP2P_CheckedChanged);
             // 
             // checkWriteConfig
             // 
             this.checkWriteConfig.AutoSize = true;
-            this.checkWriteConfig.Location = new System.Drawing.Point(12, 19);
+            this.checkWriteConfig.Location = new System.Drawing.Point(24, 18);
             this.checkWriteConfig.Name = "checkWriteConfig";
             this.checkWriteConfig.Size = new System.Drawing.Size(84, 17);
             this.checkWriteConfig.TabIndex = 0;
@@ -467,40 +512,38 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
-            // numericUpDown1
+            // checkBox2
             // 
-            this.numericUpDown1.Enabled = false;
-            this.numericUpDown1.Location = new System.Drawing.Point(303, 17);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(59, 32);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(105, 17);
+            this.checkBox2.TabIndex = 7;
+            this.checkBox2.Text = "Heartbeat format";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(452, 7);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "T->O data length";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Enabled = false;
+            this.numericUpDown2.Location = new System.Drawing.Point(467, 23);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(57, 20);
-            this.numericUpDown1.TabIndex = 4;
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(366, 19);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(87, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "O->T data length";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(197, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(100, 17);
-            this.checkBox1.TabIndex = 6;
-            this.checkBox1.Text = "Variable Length";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(57, 20);
+            this.numericUpDown2.TabIndex = 7;
             // 
             // ImplicitMessaging
             // 
@@ -535,6 +578,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
             this.splitContainer6.Panel1.ResumeLayout(false);
+            this.splitContainer6.Panel1.PerformLayout();
             this.splitContainer6.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).EndInit();
             this.splitContainer6.ResumeLayout(false);
@@ -550,8 +594,9 @@
             this.splitContainer8.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).EndInit();
             this.splitContainer8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.CycleTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CycleTime)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -587,5 +632,8 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
     }
 }

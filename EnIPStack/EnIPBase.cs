@@ -629,14 +629,16 @@ namespace System.Net.EnIPStack
         public ushort TypeId2;
         public ushort Lenght2 = 8;
         public ushort SequenceCount; // ??
+        public bool Heartbeat;
 
         public byte[] data;
 
-        public SequencedAddressItem(uint ConnectionId=0, uint SequenceNumber=0, byte[] data=null)
+        public SequencedAddressItem(uint ConnectionId=0, uint SequenceNumber=0, byte[] data=null, bool Heartbeat=false)
         {
             this.ConnectionId = ConnectionId;
             this.SequenceNumber = SequenceNumber;
             this.data = data;
+            this.Heartbeat = Heartbeat;
         }
 
         public SequencedAddressItem(byte[] DataArray, ref int Offset, int Lenght)
@@ -686,7 +688,15 @@ namespace System.Net.EnIPStack
             }
             else
             {
-                Lenght2 = (ushort)(data.Length + 2 + 4); // +2 SequenceNumber bis (2 bytes !) +4 : 32 bits header
+                if ( Heartbeat )
+                {
+                    Lenght2 = (ushort)(data.Length + 2 ); // +2 SequenceNumber bis (2 bytes !)
+                }
+                else
+                {
+                    Lenght2 = (ushort)(data.Length + 2 + 4); // +2 SequenceNumber bis (2 bytes !), +4 Bytes Header
+                }
+                
                 retVal = new byte[18 + Lenght2];
             }
 
@@ -704,8 +714,11 @@ namespace System.Net.EnIPStack
             {
                 // Don't really understand this sequence count
                 Array.Copy(BitConverter.GetBytes((ushort)SequenceNumber), 0, retVal, 18, 2);
-                Array.Copy(BitConverter.GetBytes((uint)0x00000001), 0, retVal, 20, 4); // 32 bits header
-                Array.Copy(data, 0, retVal, 24, data.Length);
+                if (!Heartbeat)
+                {
+                    Array.Copy(BitConverter.GetBytes((uint)0x00000001), 0, retVal, 20, 4); // 32 bits header
+                    Array.Copy(data, 0, retVal, 24, data.Length);
+                }
             }
 
             SequenceNumber++;
