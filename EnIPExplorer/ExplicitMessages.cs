@@ -165,7 +165,24 @@ namespace EnIPExplorer
         {
             List<byte> lb = new List<byte>();
             // lb.Add(getServiceId());
-            List<byte> path = GetPath(getClasseId(), getInstanceId(), getAttributeId());
+
+            List<byte> path;
+            if (checkBox1.Checked == false)
+            {
+                path = GetPath(getClasseId(), getInstanceId(), getAttributeId());
+            }
+            else
+            {
+                path = new List<byte>();
+                path.Add(0x91);
+                path.Add((byte)symbolicName.Text.Length);
+                byte[] stringAsByte = Encoding.ASCII.GetBytes(symbolicName.Text);
+                foreach (byte b in stringAsByte)
+                {
+                    path.Add(b);
+                }
+            }
+
             lb.Add(((byte)(path.Count/2))); // size in words not bytes
             lb.AddRange(path);
             lb.AddRange(getExtraData());
@@ -179,8 +196,24 @@ namespace EnIPExplorer
             tb_received.Text = "";
 
             List<byte> lb = new List<byte>();
+            List<byte> path;
             // lb.Add(getServiceId());
-            List<byte> path = GetPath(getClasseId(), getInstanceId(), getAttributeId());
+            if ( checkBox1.Checked == false )
+            {
+                path = GetPath(getClasseId(), getInstanceId(), getAttributeId());
+            }
+            else
+            {
+                path = new List<byte>();
+                path.Add(0x91);
+                path.Add((byte)symbolicName.Text.Length);
+                byte[] stringAsByte = Encoding.ASCII.GetBytes(symbolicName.Text);
+                foreach( byte b in stringAsByte)
+                {
+                    path.Add(b);
+                }
+            }
+
             // lb.Add(((byte)(path.Count / 2))); // size in words not bytes
             lb.AddRange(path);
             //lb.AddRange(getExtraData());
@@ -498,6 +531,37 @@ namespace EnIPExplorer
             return new List<Byte>(StringToByteArray(tb_data.Text.Replace(" ", "")));
         }
 
+        private void cb_class_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void l_data_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if( checkBox1.Checked )
+            {
+                cb_class.Enabled = false;
+                tb_instance.Enabled = false;
+                tb_attribute.Enabled = false;
+                symbolicName.Enabled = true;
+            }
+            else
+            {
+                cb_class.Enabled = true;
+                tb_instance.Enabled = true;
+                tb_attribute.Enabled = true;
+                symbolicName.Enabled = false;
+            }
+        }
     }
 }

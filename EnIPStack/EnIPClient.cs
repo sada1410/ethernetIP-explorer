@@ -35,6 +35,7 @@ using System.Threading;
 using System.Net.EnIPStack.ObjectsLibrary;
 using System.Reflection;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace System.Net.EnIPStack
 {
@@ -461,9 +462,9 @@ namespace System.Net.EnIPStack
         }
 
         // Gives a compressed Path with a list of Attributs
-        private byte[] GetForwardOpenPath(EnIPAttribut Config, EnIPAttribut O2T, EnIPAttribut T2O)
+        private byte[] GetForwardOpenPath(EnIPAttribut Config, EnIPAttribut O2T, EnIPAttribut T2O, bool symbolInput = false, bool symbolOutput = false)
         {
-            byte[] ConstructDataPath = new byte[20];
+            byte[] ConstructDataPath = new byte[500];
             int offset = 0;
 
             ushort? Cid, Aid;
@@ -472,6 +473,7 @@ namespace System.Net.EnIPStack
 
             EnIPAttribut[] Atts =new EnIPAttribut[] {Config, O2T, T2O };
 
+            int cnt = 0;
             foreach (EnIPAttribut att in Atts)
             {
                 if (att != null)
@@ -484,12 +486,22 @@ namespace System.Net.EnIPStack
 
                     Aid = ((att.Id == 3) && (att.myInstance.myClass.Id == 4)) ? null : (ushort?)att.Id;
 
-                    DataPath = EnIPPath.GetPath(Cid, att.myInstance.Id, Aid, att != Config);
+                    if( (cnt == 1) && (symbolOutput) || (cnt == 2) && (symbolInput))
+                    {
+                        DataPath = EnIPPath.GetSymbolPath(Cid, att.SymbolName, att.myInstance.Id);
+                    }
+                    else
+                    {
+                        DataPath = EnIPPath.GetPath(Cid, att.myInstance.Id, Aid, att != Config);
+                    }
+
+
                     Array.Copy(DataPath, 0, ConstructDataPath, offset, DataPath.Length);
                     offset += DataPath.Length;
 
                     previousAtt = att;
                 }
+                cnt++;
             }
 
             byte[] FinalPath = new byte[offset];
@@ -499,17 +511,17 @@ namespace System.Net.EnIPStack
             // return something like  0x20, 0x04, 0x24, 0x80, 0x2C, 0x66, 0x2C, 0x65
         }
 
-        public EnIPNetworkStatus ForwardOpen(EnIPAttribut Config, EnIPAttribut O2T, EnIPAttribut T2O, out ForwardClose_Packet ClosePacket, uint CycleTime, bool P2P = false, bool WriteConfig = false, bool Heartbeat=false)
+        public EnIPNetworkStatus ForwardOpen(EnIPAttribut Config, EnIPAttribut O2T, EnIPAttribut T2O, out ForwardClose_Packet ClosePacket, uint CycleTime, bool P2P = false, bool WriteConfig = false, bool Heartbeat = false, bool symbolInput = false, bool symbolOutput = false, bool variableSize = false)
         {
-            ForwardOpen_Config conf = new ForwardOpen_Config(O2T, T2O, P2P, CycleTime);
-            return ForwardOpen(Config, O2T, T2O, out ClosePacket, conf, WriteConfig, Heartbeat);
+            ForwardOpen_Config conf = new ForwardOpen_Config(O2T, T2O, P2P, CycleTime, variableSize);
+            return ForwardOpen(Config, O2T, T2O, out ClosePacket, conf, WriteConfig, Heartbeat, symbolInput, symbolOutput);
         }
 
-        public EnIPNetworkStatus ForwardOpen(EnIPAttribut Config, EnIPAttribut O2T, EnIPAttribut T2O, out ForwardClose_Packet ClosePacket, ForwardOpen_Config conf, bool WriteConfig=false, bool Heartbeat=false)
+        public EnIPNetworkStatus ForwardOpen(EnIPAttribut Config, EnIPAttribut O2T, EnIPAttribut T2O, out ForwardClose_Packet ClosePacket, ForwardOpen_Config conf, bool WriteConfig=false, bool Heartbeat=false, bool symbolInput = false, bool symbolOutput = false)
         {
             ClosePacket = null;
 
-            byte[] DataPath = GetForwardOpenPath(Config, O2T, T2O );
+            byte[] DataPath = GetForwardOpenPath(Config, O2T, T2O, symbolInput, symbolOutput);
 
             if ((WriteConfig == true) && (Config != null)) // Add data segment
             {
@@ -846,6 +858,8 @@ namespace System.Net.EnIPStack
 
         public event T2OEventHandler T2OEvent;
 
+        public String SymbolName;
+
         public EnIPAttribut(EnIPInstance Instance, ushort Id)
         {
             this.Id = Id;
@@ -920,9 +934,29 @@ namespace System.Net.EnIPStack
             RemoteDevice.Class1AttributUnEnrolment(this);
         }
 
-        public void Class1UpdateO2T()
+        public void Class1UpdateO2T( )
         {
             SequenceItem.data = this.RawData; // Normaly don't change between call
+
+            RemoteDevice.Class1SendO2T(SequenceItem);
+        }
+
+        public void Class1UpdateO2T( int i )
+        {
+            if ( i > SequenceItem.data.Length)
+            {
+                SequenceItem.data = new byte[i]; // for testing purposes
+                for ( int n = 0; n < i; n++ )
+                {
+                    SequenceItem.data[n] = (byte)0x55; // test pattern
+                }
+            }
+            else
+            {
+                SequenceItem.data = new byte[i];
+                Array.Copy(this.RawData, 0, SequenceItem.data, 0, i);
+            }
+
             RemoteDevice.Class1SendO2T(SequenceItem);
         }
 

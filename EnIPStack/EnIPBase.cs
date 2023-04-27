@@ -53,6 +53,48 @@ namespace System.Net.EnIPStack
             }
         }
 
+        public static byte[] GetSymbolPath(ushort? Class, String Symbol, ushort Instance)
+        {
+            if (Symbol.Length >= 32)
+            {
+                return null;
+            }
+            else
+            {
+                byte[] path = new byte[100];
+                int size = 0;
+
+                /*if (Class != null)
+                    Fit(path, ref size, Class.Value, 0x20);*/
+
+                int segmentType =   0x91;
+                int segmentLength = Symbol.Length;
+
+                path[size] = ((byte)segmentType);
+                size++;
+                path[size] = ((byte)segmentLength);
+                size++;
+                byte[] stringAsByte = Encoding.ASCII.GetBytes(Symbol);
+                int n = size;
+                foreach (byte b in stringAsByte)
+                {
+                    path[n++] = b;
+                    size++;
+                }
+
+                if(Symbol.Length % 2 != 0)
+                {
+                    path[size] = 0;
+                    size++;
+                }
+
+                byte[] Ret = new byte[size];
+                Array.Copy(path, Ret, size);
+
+                return Ret;
+            }
+        }
+
         public static byte[] GetPath(ushort? Class, ushort Instance, ushort? Attribut=null, bool IsConnectionPoint=false)
         {
 
@@ -325,13 +367,10 @@ namespace System.Net.EnIPStack
         // up to now it's only a request paquet
         public byte[] toByteArray()
         {
-            if ((Path == null) || ((Path.Length%2)!=0))
-            {
-                Trace.TraceError("Request_Path is not OK");
-                return null;
-            }
-
             DataLength = (ushort)(2 + Path.Length + (Data == null ? 0 : Data.Length));
+
+            if (Path.Length % 2 != 0 && Path[0] == 0x91)
+                DataLength++;
 
             // Volume 2 : Table 3-2.1 UCMM Request
             byte[] retVal = new byte[10 + 6 + DataLength];
@@ -342,12 +381,26 @@ namespace System.Net.EnIPStack
             Array.Copy(BitConverter.GetBytes(DataLength), 0, retVal, 14, 2);
 
             retVal[16] = Service;
-            retVal[17] = (byte)(Path.Length >> 1);
+            if ( (Path.Length) % 2 == 0)
+                retVal[17] = (byte)((Path.Length) >> 1);
+            else
+                retVal[17] = (byte)((Path.Length+1) >> 1);
 
             Array.Copy(Path, 0, retVal, 10+8, Path.Length);
 
             if (Data != null)
-                Array.Copy(Data, 0, retVal, 10 + 8 + Path.Length, Data.Length);
+            {
+                if ((Path.Length) % 2 == 0)
+                {
+                    Array.Copy(Data, 0, retVal, 10 + 8 + Path.Length, Data.Length);
+                }
+                else
+                {
+                    Array.Copy(Data, 0, retVal, 10 + 8 + Path.Length + 1, Data.Length);
+                }
+            }
+                   
+                
 
             return retVal;
         }        
@@ -364,10 +417,12 @@ namespace System.Net.EnIPStack
         public byte O2T_Priority = 0; 
         public ushort O2T_datasize=0;
         public uint O2T_RPI=200*1000; // 200 ms
+        public bool O2T_Variable = false;
 
         public bool IsT2O = false;
         public bool T2O_Exculsive = false;
         public bool T2O_P2P = true;
+        public bool T2O_Variable = false;
         /// <summary>
         /// 0=Low; 1=High; 2=Scheduled; 3=Urgent
         /// </summary>
@@ -379,7 +434,7 @@ namespace System.Net.EnIPStack
         {
         }
 
-        public ForwardOpen_Config(EnIPAttribut Output, EnIPAttribut Input, bool InputP2P, uint cycleTime)
+        public ForwardOpen_Config(EnIPAttribut Output, EnIPAttribut Input, bool InputP2P, uint cycleTime, bool variable)
         {
             if (Output != null)
             {
@@ -387,6 +442,7 @@ namespace System.Net.EnIPStack
                 O2T_datasize = (ushort)Output.RawData.Length;
                 O2T_RPI = cycleTime; // in microsecond,  here same for the two direction
                 O2T_P2P = true; // by default in this direction
+                O2T_Variable = variable; // TODO second variable 
             }
             if (Input != null)
             {
@@ -394,6 +450,7 @@ namespace System.Net.EnIPStack
                 T2O_datasize = (ushort)Input.RawData.Length;
                 T2O_RPI = cycleTime; // in microsecond, here same for the two direction
                 T2O_P2P = InputP2P;
+                T2O_Variable = variable;
             }
         }
     }
@@ -488,6 +545,9 @@ namespace System.Net.EnIPStack
                 if (conf.O2T_Exculsive)
                     T2O_ConnectionParameters = T2O_ConnectionParameters | 0x8000;
 
+                if (conf.O2T_Variable)
+                    T2O_ConnectionParameters = T2O_ConnectionParameters | 0x200;
+
                 if (IsLargeForwardOpen)
                 {
                     T2O_ConnectionParameters = (T2O_ConnectionParameters << 16) + conf.T2O_datasize + 2;
@@ -510,9 +570,10 @@ namespace System.Net.EnIPStack
                 if (conf.O2T_Exculsive)
                     O2T_ConnectionParameters = O2T_ConnectionParameters | 0x8000;
 
-
+                if (conf.T2O_Variable)
+                    O2T_ConnectionParameters = O2T_ConnectionParameters | 0x200;
                 // 2 bytes CIP class 1 sequence count + 4 bytes 32-bit real time header + datasize bytes application data
-                if (conf.O2T_P2P) O2T_ConnectionParameters = 0x4600; else O2T_ConnectionParameters = 0x2600;
+                // if (conf.O2T_P2P) O2T_ConnectionParameters = 0x4600; else O2T_ConnectionParameters = 0x2600;
 
                 if (IsLargeForwardOpen)
                 {

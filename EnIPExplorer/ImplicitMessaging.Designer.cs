@@ -40,15 +40,22 @@
             this.propertyGridConfig = new System.Windows.Forms.PropertyGrid();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
+            this.outputSymbolCheck = new System.Windows.Forms.CheckBox();
+            this.symbolOutput = new System.Windows.Forms.TextBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.labelOutput = new System.Windows.Forms.Label();
             this.propertyGridOutput = new System.Windows.Forms.PropertyGrid();
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
+            this.inputSymbolCheck = new System.Windows.Forms.CheckBox();
+            this.symbolInput = new System.Windows.Forms.TextBox();
             this.ImgInputActivity = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.labelInput = new System.Windows.Forms.Label();
             this.propertyGridInput = new System.Windows.Forms.PropertyGrid();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -59,9 +66,6 @@
             this.buttonFw = new System.Windows.Forms.Button();
             this.tmrO2T = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -98,9 +102,9 @@
             this.splitContainer8.Panel1.SuspendLayout();
             this.splitContainer8.Panel2.SuspendLayout();
             this.splitContainer8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CycleTime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -117,8 +121,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer8);
-            this.splitContainer1.Size = new System.Drawing.Size(876, 424);
-            this.splitContainer1.SplitterDistance = 370;
+            this.splitContainer1.Size = new System.Drawing.Size(876, 461);
+            this.splitContainer1.SplitterDistance = 402;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer2
@@ -134,7 +138,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer3);
-            this.splitContainer2.Size = new System.Drawing.Size(876, 370);
+            this.splitContainer2.Size = new System.Drawing.Size(876, 402);
             this.splitContainer2.SplitterDistance = 200;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -143,7 +147,7 @@
             this.ClassView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ClassView.Location = new System.Drawing.Point(0, 0);
             this.ClassView.Name = "ClassView";
-            this.ClassView.Size = new System.Drawing.Size(200, 370);
+            this.ClassView.Size = new System.Drawing.Size(200, 402);
             this.ClassView.TabIndex = 0;
             // 
             // splitContainer3
@@ -159,7 +163,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(672, 370);
+            this.splitContainer3.Size = new System.Drawing.Size(672, 402);
             this.splitContainer3.SplitterDistance = 223;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -179,8 +183,8 @@
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.propertyGridConfig);
-            this.splitContainer5.Size = new System.Drawing.Size(223, 370);
-            this.splitContainer5.SplitterDistance = 52;
+            this.splitContainer5.Size = new System.Drawing.Size(223, 402);
+            this.splitContainer5.SplitterDistance = 73;
             this.splitContainer5.TabIndex = 0;
             // 
             // pictureBox3
@@ -189,7 +193,7 @@
             this.pictureBox3.Image = global::EnIPExplorer.Properties.Resources.bullet_wrench;
             this.pictureBox3.Location = new System.Drawing.Point(0, 0);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(16, 50);
+            this.pictureBox3.Size = new System.Drawing.Size(16, 71);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
@@ -200,7 +204,7 @@
             this.labelConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelConfig.Location = new System.Drawing.Point(0, 0);
             this.labelConfig.Name = "labelConfig";
-            this.labelConfig.Size = new System.Drawing.Size(221, 50);
+            this.labelConfig.Size = new System.Drawing.Size(221, 71);
             this.labelConfig.TabIndex = 1;
             this.labelConfig.Text = "Configuration\r\nDrag Drop to set";
             this.labelConfig.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -216,7 +220,7 @@
             this.propertyGridConfig.Location = new System.Drawing.Point(0, 0);
             this.propertyGridConfig.Name = "propertyGridConfig";
             this.propertyGridConfig.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.propertyGridConfig.Size = new System.Drawing.Size(221, 312);
+            this.propertyGridConfig.Size = new System.Drawing.Size(221, 323);
             this.propertyGridConfig.TabIndex = 0;
             this.propertyGridConfig.ToolbarVisible = false;
             this.propertyGridConfig.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGridConfig_PropertyValueChanged);
@@ -236,7 +240,7 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.splitContainer7);
-            this.splitContainer4.Size = new System.Drawing.Size(445, 370);
+            this.splitContainer4.Size = new System.Drawing.Size(445, 402);
             this.splitContainer4.SplitterDistance = 224;
             this.splitContainer4.TabIndex = 0;
             // 
@@ -250,6 +254,8 @@
             // 
             // splitContainer6.Panel1
             // 
+            this.splitContainer6.Panel1.Controls.Add(this.outputSymbolCheck);
+            this.splitContainer6.Panel1.Controls.Add(this.symbolOutput);
             this.splitContainer6.Panel1.Controls.Add(this.checkBox2);
             this.splitContainer6.Panel1.Controls.Add(this.pictureBox1);
             this.splitContainer6.Panel1.Controls.Add(this.labelOutput);
@@ -257,9 +263,39 @@
             // splitContainer6.Panel2
             // 
             this.splitContainer6.Panel2.Controls.Add(this.propertyGridOutput);
-            this.splitContainer6.Size = new System.Drawing.Size(224, 370);
-            this.splitContainer6.SplitterDistance = 52;
+            this.splitContainer6.Size = new System.Drawing.Size(224, 402);
+            this.splitContainer6.SplitterDistance = 73;
             this.splitContainer6.TabIndex = 0;
+            this.splitContainer6.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer6_SplitterMoved);
+            // 
+            // outputSymbolCheck
+            // 
+            this.outputSymbolCheck.AutoSize = true;
+            this.outputSymbolCheck.Location = new System.Drawing.Point(25, 30);
+            this.outputSymbolCheck.Name = "outputSymbolCheck";
+            this.outputSymbolCheck.Size = new System.Drawing.Size(60, 17);
+            this.outputSymbolCheck.TabIndex = 8;
+            this.outputSymbolCheck.Text = "Symbol";
+            this.outputSymbolCheck.UseVisualStyleBackColor = true;
+            this.outputSymbolCheck.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
+            // symbolOutput
+            // 
+            this.symbolOutput.Location = new System.Drawing.Point(22, 48);
+            this.symbolOutput.Name = "symbolOutput";
+            this.symbolOutput.Size = new System.Drawing.Size(197, 20);
+            this.symbolOutput.TabIndex = 5;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(111, 30);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(105, 17);
+            this.checkBox2.TabIndex = 7;
+            this.checkBox2.Text = "Heartbeat format";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // pictureBox1
             // 
@@ -267,7 +303,7 @@
             this.pictureBox1.Image = global::EnIPExplorer.Properties.Resources.door_out;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(16, 50);
+            this.pictureBox1.Size = new System.Drawing.Size(16, 71);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -279,7 +315,7 @@
             this.labelOutput.Location = new System.Drawing.Point(0, 0);
             this.labelOutput.Name = "labelOutput";
             this.labelOutput.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            this.labelOutput.Size = new System.Drawing.Size(222, 50);
+            this.labelOutput.Size = new System.Drawing.Size(222, 71);
             this.labelOutput.TabIndex = 1;
             this.labelOutput.Text = "Output (O->T)\r\nDrag Drop to set";
             this.labelOutput.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -296,10 +332,11 @@
             this.propertyGridOutput.Location = new System.Drawing.Point(0, 0);
             this.propertyGridOutput.Name = "propertyGridOutput";
             this.propertyGridOutput.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.propertyGridOutput.Size = new System.Drawing.Size(222, 312);
+            this.propertyGridOutput.Size = new System.Drawing.Size(222, 323);
             this.propertyGridOutput.TabIndex = 0;
             this.propertyGridOutput.ToolbarVisible = false;
             this.propertyGridOutput.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGridOutput_PropertyValueChanged);
+            this.propertyGridOutput.Click += new System.EventHandler(this.propertyGridOutput_Click);
             this.propertyGridOutput.DragDrop += new System.Windows.Forms.DragEventHandler(this.Output_DragDrop);
             this.propertyGridOutput.DragEnter += new System.Windows.Forms.DragEventHandler(this._DragEnter);
             // 
@@ -313,6 +350,8 @@
             // 
             // splitContainer7.Panel1
             // 
+            this.splitContainer7.Panel1.Controls.Add(this.inputSymbolCheck);
+            this.splitContainer7.Panel1.Controls.Add(this.symbolInput);
             this.splitContainer7.Panel1.Controls.Add(this.ImgInputActivity);
             this.splitContainer7.Panel1.Controls.Add(this.pictureBox2);
             this.splitContainer7.Panel1.Controls.Add(this.labelInput);
@@ -320,17 +359,34 @@
             // splitContainer7.Panel2
             // 
             this.splitContainer7.Panel2.Controls.Add(this.propertyGridInput);
-            this.splitContainer7.Size = new System.Drawing.Size(217, 370);
-            this.splitContainer7.SplitterDistance = 52;
+            this.splitContainer7.Size = new System.Drawing.Size(217, 402);
+            this.splitContainer7.SplitterDistance = 73;
             this.splitContainer7.TabIndex = 0;
+            // 
+            // inputSymbolCheck
+            // 
+            this.inputSymbolCheck.AutoSize = true;
+            this.inputSymbolCheck.Location = new System.Drawing.Point(25, 30);
+            this.inputSymbolCheck.Name = "inputSymbolCheck";
+            this.inputSymbolCheck.Size = new System.Drawing.Size(60, 17);
+            this.inputSymbolCheck.TabIndex = 9;
+            this.inputSymbolCheck.Text = "Symbol";
+            this.inputSymbolCheck.UseVisualStyleBackColor = true;
+            // 
+            // symbolInput
+            // 
+            this.symbolInput.Location = new System.Drawing.Point(22, 48);
+            this.symbolInput.Name = "symbolInput";
+            this.symbolInput.Size = new System.Drawing.Size(190, 20);
+            this.symbolInput.TabIndex = 4;
             // 
             // ImgInputActivity
             // 
-            this.ImgInputActivity.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ImgInputActivity.Dock = System.Windows.Forms.DockStyle.Right;
             this.ImgInputActivity.Image = global::EnIPExplorer.Properties.Resources.bullet_red;
-            this.ImgInputActivity.Location = new System.Drawing.Point(16, 0);
+            this.ImgInputActivity.Location = new System.Drawing.Point(185, 0);
             this.ImgInputActivity.Name = "ImgInputActivity";
-            this.ImgInputActivity.Size = new System.Drawing.Size(30, 50);
+            this.ImgInputActivity.Size = new System.Drawing.Size(30, 71);
             this.ImgInputActivity.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ImgInputActivity.TabIndex = 3;
             this.ImgInputActivity.TabStop = false;
@@ -342,7 +398,7 @@
             this.pictureBox2.Image = global::EnIPExplorer.Properties.Resources.door_in;
             this.pictureBox2.Location = new System.Drawing.Point(0, 0);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(16, 50);
+            this.pictureBox2.Size = new System.Drawing.Size(16, 71);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
@@ -353,10 +409,10 @@
             this.labelInput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelInput.Location = new System.Drawing.Point(0, 0);
             this.labelInput.Name = "labelInput";
-            this.labelInput.Size = new System.Drawing.Size(215, 50);
+            this.labelInput.Size = new System.Drawing.Size(215, 71);
             this.labelInput.TabIndex = 1;
             this.labelInput.Text = "Input (T->O)\r\nDrag Drop to set";
-            this.labelInput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelInput.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.labelInput.DragDrop += new System.Windows.Forms.DragEventHandler(this.Input_DragDrop);
             this.labelInput.DragEnter += new System.Windows.Forms.DragEventHandler(this._DragEnter);
             // 
@@ -369,7 +425,7 @@
             this.propertyGridInput.Location = new System.Drawing.Point(0, 0);
             this.propertyGridInput.Name = "propertyGridInput";
             this.propertyGridInput.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.propertyGridInput.Size = new System.Drawing.Size(215, 312);
+            this.propertyGridInput.Size = new System.Drawing.Size(215, 323);
             this.propertyGridInput.TabIndex = 0;
             this.propertyGridInput.ToolbarVisible = false;
             this.propertyGridInput.Click += new System.EventHandler(this.propertyGridInput_Click);
@@ -398,9 +454,32 @@
             // splitContainer8.Panel2
             // 
             this.splitContainer8.Panel2.Controls.Add(this.buttonFw);
-            this.splitContainer8.Size = new System.Drawing.Size(876, 50);
+            this.splitContainer8.Size = new System.Drawing.Size(876, 55);
             this.splitContainer8.SplitterDistance = 655;
             this.splitContainer8.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(452, 7);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "T->O data length";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Enabled = false;
+            this.numericUpDown2.Location = new System.Drawing.Point(467, 23);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(57, 20);
+            this.numericUpDown2.TabIndex = 7;
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             // 
             // checkBox1
             // 
@@ -496,7 +575,7 @@
             this.buttonFw.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonFw.Location = new System.Drawing.Point(0, 0);
             this.buttonFw.Name = "buttonFw";
-            this.buttonFw.Size = new System.Drawing.Size(217, 50);
+            this.buttonFw.Size = new System.Drawing.Size(217, 55);
             this.buttonFw.TabIndex = 0;
             this.buttonFw.Text = "(Large)Forward Open";
             this.buttonFw.UseVisualStyleBackColor = true;
@@ -512,44 +591,11 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(59, 32);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(105, 17);
-            this.checkBox2.TabIndex = 7;
-            this.checkBox2.Text = "Heartbeat format";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(452, 7);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "T->O data length";
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Enabled = false;
-            this.numericUpDown2.Location = new System.Drawing.Point(467, 23);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(57, 20);
-            this.numericUpDown2.TabIndex = 7;
-            // 
             // ImplicitMessaging
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(876, 424);
+            this.ClientSize = new System.Drawing.Size(876, 461);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ImplicitMessaging";
@@ -584,6 +630,7 @@
             this.splitContainer6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.splitContainer7.Panel1.ResumeLayout(false);
+            this.splitContainer7.Panel1.PerformLayout();
             this.splitContainer7.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).EndInit();
             this.splitContainer7.ResumeLayout(false);
@@ -594,9 +641,9 @@
             this.splitContainer8.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).EndInit();
             this.splitContainer8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CycleTime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -635,5 +682,9 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.CheckBox outputSymbolCheck;
+        private System.Windows.Forms.TextBox symbolOutput;
+        private System.Windows.Forms.TextBox symbolInput;
+        private System.Windows.Forms.CheckBox inputSymbolCheck;
     }
 }

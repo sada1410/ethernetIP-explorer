@@ -152,9 +152,13 @@ namespace System.Net.EnIPStack
         InsertMember = 0x1A,
         RemoveMember = 0x1B,
         GroupSync = 0x1C,
+        SymbolicTranslation = 0x4B,
+        ReadTagService = 0x4C,
+        WriteTagService = 0x4D,
         ForwardClose = 0x4E,
         UnconnectedSend = 0x52,
         ForwardOpen = 0x54,  
+        GetConnectionOwner = 0x5A,
         LargeForwardOpen = 0x5B
 
     }

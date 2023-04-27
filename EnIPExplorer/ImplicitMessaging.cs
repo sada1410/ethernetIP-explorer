@@ -100,11 +100,13 @@ namespace EnIPExplorer
         private void Output_DragDrop(object sender, DragEventArgs e)
         {
             _DragDrop(e, labelOutput, propertyGridOutput, "Output (O->T)", ref Output);
+            numericUpDown1.Value = Output.RawData.Length;
         }
 
         private void Input_DragDrop(object sender, DragEventArgs e)
         {
             _DragDrop(e, labelInput, propertyGridInput, "Input (T->O)", ref Input);
+            numericUpDown2.Value = Input.RawData.Length;
         }
 
         private void buttonFw_Click(object sender, EventArgs e)
@@ -121,13 +123,31 @@ namespace EnIPExplorer
 
             if (FwclosePacket == null)
             {
+                if (!checkBox1.Checked)
+                {
+                    numericUpDown1.Enabled = false;
+                }
+                numericUpDown2.Enabled = false;
+
                 if ( isOTVariable )
                 {
-                    Output.RawData = new byte[(int)numericUpDown1.Value];
+                    if ( Output != null )
+                        Output.RawData = new byte[(int)numericUpDown1.Value];
+                    if ( Input != null )
+                        Input.RawData  = new byte[(int)numericUpDown2.Value];
                 }
 
+                if( inputSymbolCheck.Checked )
+                {
+                    Input.SymbolName = symbolInput.Text;
+                }
+
+                if( outputSymbolCheck.Checked)
+                {
+                    Output.SymbolName = symbolOutput.Text;
+                }
                 // CycleTime in microseconds
-                EnIPNetworkStatus result = device.ForwardOpen(Config, Output, Input, out FwclosePacket, (uint)(CycleTime.Value * 1000), checkP2P.Checked, checkWriteConfig.Checked, checkBox2.Checked);
+                EnIPNetworkStatus result = device.ForwardOpen(Config, Output, Input, out FwclosePacket, (uint)(CycleTime.Value * 1000), checkP2P.Checked, checkWriteConfig.Checked, checkBox2.Checked, inputSymbolCheck.Checked, outputSymbolCheck.Checked, isOTVariable);
 
                 if (result == EnIPNetworkStatus.OnLine)
                 {
@@ -144,6 +164,8 @@ namespace EnIPExplorer
 
             else
             {
+                numericUpDown1.Enabled = true;
+                numericUpDown2.Enabled = true;
                 tmrO2T.Enabled = false;
                 device.ForwardClose(FwclosePacket);
                 buttonFw.Text = "(Large)Forward Open";
@@ -168,7 +190,14 @@ namespace EnIPExplorer
 
         private void tmrO2I_Tick(object sender, EventArgs e)
         {
-            Output.Class1UpdateO2T();
+            if ( numericUpDown1.Enabled )
+            {
+                Output.Class1UpdateO2T( (int)numericUpDown1.Value );
+            }
+            else
+            {
+                Output.Class1UpdateO2T();
+            }
         }
 
         private void ImplicitMessaging_FormClosing(object sender, FormClosingEventArgs e)
@@ -211,12 +240,17 @@ namespace EnIPExplorer
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             isOTVariable = checkBox1.Checked;
-            numericUpDown1.Enabled = isOTVariable;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-
+            byte[] numberItems = new byte[ (int)numericUpDown1.Value ];
+            if ( Output != null )
+            {
+                Output.RawData = numberItems;
+                propertyGridOutput.SelectedObject = Output;
+                propertyGridOutput.ExpandAllGridItems();
+            }
         }
 
         private void checkP2P_CheckedChanged(object sender, EventArgs e)
@@ -232,6 +266,32 @@ namespace EnIPExplorer
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void splitContainer6_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void propertyGridOutput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            byte[] numberItems = new byte[(int)numericUpDown2.Value];
+            if ( Input != null )
+            {
+                Input.RawData = numberItems;
+                propertyGridInput.SelectedObject = Input;
+                propertyGridInput.ExpandAllGridItems();
+            }
         }
 
         private void propertyGridConfig_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
